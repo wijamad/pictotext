@@ -1,0 +1,85 @@
+@startuml mainClassDiagram
+
+abstract class StatelessWidget {
+  createState()
+}
+
+class ImageText {
+  image XFile
+  text String
+  isEditing boolean
+  isFullText boolean
+  copywith({image,text,isEditing,isFullText})
+}
+
+ class PictotextState {
+  status TextStatus
+  items List<ImageText>
+  copywith({status,items})
+ }
+
+ abstract class PictotextEvent {
+ }
+
+ class RecognizeImage{
+ }
+
+ class ChangeisEditing{
+    index int
+ }
+
+ class ChangeisFullText{
+    index int
+ }
+
+ class SaveText{
+    index int
+    text String
+ }
+
+ abstract class Bloc {
+    state PictotextState
+    event PictotextEvent
+ }
+
+class PictotextBloc {
+    _onRecognizeImage(event,emit)
+    _onChangeisEditing(event, emit)
+    _onChangeisFullText(event, emit)
+    _onEditSave(event, emit)
+}
+
+ class PictotextPage{
+
+ }
+
+ class PictotextView{
+
+ }
+ class ItemImage{
+   index int
+ }
+
+ 
+ PictotextEvent <|-- RecognizeImage
+ PictotextEvent <|-- ChangeisEditing
+ PictotextEvent <|-- ChangeisFullText
+ PictotextEvent <|-- SaveText
+ Bloc <|-- PictotextBloc
+ PictotextBloc *-- PictotextState
+ PictotextBloc *- PictotextEvent
+ PictotextState "1" *-- "1..*" ImageText
+ PictotextPage - PictotextBloc
+ PictotextPage -- PictotextView
+ PictotextView "1" *-- "1..*" ItemImage
+ StatelessWidget <|- PictotextPage
+ StatelessWidget <|- PictotextView
+ StatelessWidget <|- ItemImage
+
+
+ 
+ 
+
+
+
+@enduml
